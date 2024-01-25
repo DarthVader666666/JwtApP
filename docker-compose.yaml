@@ -1,0 +1,30 @@
+version: '3.7'
+
+networks:
+ dev:
+  driver: bridge
+
+services:
+ jwt-server:
+  image: jwt-server
+  container_name: jwt-server-container
+  ports:
+   - "8000:80"
+  build:
+   context: .
+   dockerfile: Dockerfile
+  networks: 
+   - dev
+  
+ jwt-client:
+  image: jwt-client
+  depends_on:
+   - "jwt-server"
+  container_name: jwt-clien-container
+  ports:
+   - "8001:3000"
+  build:
+   context: .
+   dockerfile: ClientApp/dojo-blog/Dockerfile
+  networks: 
+   - dev
